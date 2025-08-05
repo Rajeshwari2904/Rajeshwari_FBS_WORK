@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .main{
+            height: 500px;
+            width: 100%;
+            background-color: rgb(239, 228, 216);
+            border: 1px dotted black;
+            display: flex;
+            justify-content:space-between;   <!--use for horizontally align the item -->
+            flex-direction:row-reverse;
+            align-items:center;   <!-- use for vertically align the items -->
+            
+        }
+        .div{
+            height: 80px;
+            width: 80px;
+            border: 2px dashed rgb(35, 32, 32);
+
+        }
+
+        #div1{
+            background-color: brown;
+        }
+        #div2{
+            background-color: rgb(189, 133, 133);
+        }
+        #div3{
+            background-color: rgb(220, 172, 42);
+        }
+        #div4{
+            background-color: rgb(31, 148, 199);
+        }
+        #div5{
+            background-color: rgb(196, 40, 228);
+        }
+
+
+    </style>
+</head>
+<body>
+    <div class="main">
+        <div class="div" id="div1"></div>
+        <div class="div" id="div2"></div>
+        <div class="div" id="div3"></div>
+        <div class="div" id="div4"></div>
+        <div class="div" id="div5"></div>
+    </div>
+</body>
+</html>
