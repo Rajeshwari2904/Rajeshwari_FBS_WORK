@@ -1,0 +1,41 @@
+class Distance
+{
+      int feet;
+      double inches;
+  
+      void setfeet(int f)
+      {
+           this.feet= f;
+      }
+      void setinches(double inches)
+      {
+           this.inches= inches;
+      }
+      int getfeet()
+      {
+           return this.feet;
+      }
+      double getinches()
+      {
+          return this.inches;
+      }
+      void display()
+      {
+          System.out.println("Feet--> "+ this.feet);
+          System.out.println("inches--> "+ this.inches);
+      }
+
+}
+
+class TestDistance
+{
+   public static void main(String[] args)
+   {
+       Distance d = new Distance();
+       d.setfeet(5);
+       d.setinches(6.8);
+       d.display();
+   }
+}
+
+
