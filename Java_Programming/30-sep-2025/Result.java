@@ -18,9 +18,9 @@ class Marks{
 		this.marks = marks;
 	}
 	
-	public void checkResult() {
-	try {
-		
+	public void checkResult() throws invalidMarksException
+	{
+	
 		if(marks <=0 ) {
 			throw new invalidMarksException();
 		}
@@ -39,15 +39,7 @@ class Marks{
 		else{
 			System.out.println("Result is First Class with Distinction");
 		}
-	  }catch(invalidMarksException me) {
-		
-		System.out.println(me);
-	 }
-	
-	 finally {
-		
-		 System.out.println("Keep it up..");
-	 }
+	 
 	
 	}
 }
@@ -59,7 +51,18 @@ public class Result {
 		
 		Marks M1 = new Marks(0);
 		
-		M1.checkResult();
+		try {
+			M1.checkResult();
+		}catch(invalidMarksException me) {
+			
+			System.out.println(me);
+		}
+		
+		finally {
+			
+			 System.out.println("Keep it up..");
+		 }
+		
 		
 
 	}
