@@ -1,0 +1,3 @@
+Hello, I am Rajeshwari Nalbalwar.
+This text will be copied to another file.
+BufferedWriter makes writing efficient!
