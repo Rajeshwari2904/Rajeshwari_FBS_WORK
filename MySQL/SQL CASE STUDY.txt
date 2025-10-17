@@ -1,0 +1,190 @@
+***********------------------------SQL CASE STUDY----------------------************
+
+mysql> table flight_info;
++-----------+--------------------+-----------+-------------+--------------+----------------+----------+
+| Flight_no | Flight_name        | Origin    | Destination | Arrival_time | Departure_time | Craft_id |
++-----------+--------------------+-----------+-------------+--------------+----------------+----------+
+|       101 | Air India Express  | Mumbai    | Delhi       | 14:30:00     | 12:00:00       |        1 |
+|       102 | IndiGo Connect     | Delhi     | Bangalore   | 18:45:00     | 16:15:00       |        2 |
+|       103 | SpiceJet Shuttle   | Chennai   | Hyderabad   | 20:00:00     | 18:00:00       |        3 |
+|       104 | Vistara Premium    | Mumbai    | Kolkata     | 21:30:00     | 19:00:00       |        1 |
+|       105 | GoAir Economy      | Delhi     | Pune        | 16:45:00     | 14:30:00       |        2 |
+|       106 | Air India Regional | Bangalore | Chennai     | 13:15:00     | 11:00:00       |        4 |
+|       107 | IndiGo Local       | Hyderabad | Mumbai      | 22:00:00     | 20:00:00       |        5 |
+|       108 | SpiceJet Connect   | Pune      | Delhi       | 15:30:00     | 13:00:00       |        3 |
+|       109 | Vistara Elite      | Kolkata   | Mumbai      | 17:45:00     | 15:30:00       |        6 |
+|       110 | GoAir Direct       | Chennai   | Delhi       | 19:00:00     | 16:30:00       |        7 |
+|       111 | Air India National | Delhi     | Chennai     | 20:30:00     | 18:00:00       |        1 |
+|       112 | IndiGo Swift       | Mumbai    | Hyderabad   | 14:00:00     | 11:30:00       |        8 |
+|       113 | SpiceJet Express   | Bangalore | Delhi       | 18:00:00     | 15:30:00       |        5 |
+|       114 | Vistara Connect    | Pune      | Bangalore   | 16:15:00     | 14:00:00       |        9 |
+|       115 | GoAir Flyer        | Kolkata   | Chennai     | 21:00:00     | 18:30:00       |       10 |
+|       116 | Air India Classic  | Hyderabad | Pune        | 12:45:00     | 10:15:00       |        2 |
+|       117 | IndiGo Advance     | Delhi     | Mumbai      | 22:30:00     | 20:00:00       |       11 |
+|       118 | SpiceJet Pioneer   | Chennai   | Kolkata     | 19:45:00     | 17:15:00       |       12 |
+|       119 | Vistara Horizon    | Bangalore | Hyderabad   | 15:00:00     | 12:30:00       |        6 |
+|       120 | GoAir Explorer     | Pune      | Delhi       | 17:30:00     | 15:00:00       |       13 |
++-----------+--------------------+-----------+-------------+--------------+----------------+----------+
+20 rows in set (0.00 sec)
+
+mysql> table booking_records;
++------------+-----------+------------+---------------+-------------+---------------------+
+| Booking_id | PNR_NO    | Bflight_no | Bpassenger_id | Economy     | Date_Time           |
++------------+-----------+------------+---------------+-------------+---------------------+
+|          1 | 987654321 |        101 |             1 | Economy     | 2025-09-01 10:15:00 |
+|          2 | 987654322 |        101 |             2 | Business    | 2025-09-02 12:45:00 |
+|          3 | 987654323 |        102 |             3 | Economy     | 2025-09-01 14:00:00 |
+|          4 | 987654324 |        103 |             1 | First Class | 2025-09-03 09:30:00 |
+|          5 | 987654325 |        104 |             5 | Economy     | 2025-09-02 15:30:00 |
+|          6 | 987654326 |        105 |             6 | Business    | 2025-09-01 16:45:00 |
+|          7 | 987654327 |        106 |             7 | Economy     | 2025-09-03 11:15:00 |
+|          8 | 987654328 |        106 |             8 | First Class | 2025-09-02 13:00:00 |
+|          9 | 987654329 |        107 |             9 | Business    | 2025-09-01 18:30:00 |
+|         10 | 987654330 |        108 |            10 | Economy     | 2025-09-04 08:00:00 |
+|         11 | 987654331 |        101 |             1 | Economy     | 2025-09-05 10:00:00 |
+|         12 | 987654332 |        110 |            12 | First Class | 2025-09-02 14:30:00 |
+|         13 | 987654333 |        103 |            13 | Business    | 2025-09-06 09:45:00 |
+|         14 | 987654334 |        111 |            14 | Economy     | 2025-09-03 15:00:00 |
+|         15 | 987654335 |        112 |            15 | Economy     | 2025-09-02 11:15:00 |
+|         16 | 987654336 |        113 |            16 | First Class | 2025-09-05 12:00:00 |
+|         17 | 987654337 |        114 |             3 | Business    | 2025-09-04 17:30:00 |
+|         18 | 987654338 |        115 |            18 | Economy     | 2025-09-01 08:45:00 |
+|         19 | 987654339 |        116 |             1 | Business    | 2025-09-07 13:15:00 |
+|         20 | 987654340 |        117 |            20 | Economy     | 2025-09-06 16:30:00 |
++------------+-----------+------------+---------------+-------------+---------------------+
+20 rows in set (0.00 sec)
+
+mysql> table passenger_info;
++--------------+----------------------+---------------+--------+----------------+
+| Passenger_id | Name                 | Mobile_Number | Gender | Luggage_weight |
++--------------+----------------------+---------------+--------+----------------+
+|            1 | Rajeshwari Nalbalwar | 9876543210    | Female |             20 |
+|            2 | Aboli Shete          | 9123456789    | Male   |             25 |
+|            3 | Neha Gupta           | 9988776655    | Female |             15 |
+|            4 | Vikram Singh         | 9234567890    | Male   |             30 |
+|            5 | Pooja Mehta          | 9876123450    | Female |             18 |
+|            6 | Sandeep Kumar        | 9012345678    | Male   |             22 |
+|            7 | Anjali Verma         | 9876501234    | Female |             16 |
+|            8 | Rohit Joshi          | 9123004567    | Male   |             28 |
+|            9 | Priya Reddy          | 9988112233    | Female |             19 |
+|           10 | Manish Patel         | 9234561234    | Male   |             24 |
+|           11 | Simran Kaur          | 9876991122    | Female |             20 |
+|           12 | Arjun Nair           | 9123450987    | Male   |             26 |
+|           13 | Neelam Desai         | 9988773344    | Female |             21 |
+|           14 | Rahul Chauhan        | 9234567891    | Male   |             23 |
+|           15 | Swati Joshi          | 9876123345    | Female |             17 |
+|           16 | Aakash Yadav         | 9012349876    | Male   |             29 |
+|           17 | Megha Bansal         | 9876512345    | Female |             18 |
+|           18 | Vivek Malhotra       | 9123005678    | Male   |             25 |
+|           19 | Anita Shah           | 9988115566    | Female |             20 |
+|           20 | Deepak Tiwari        | 9234567892    | Male   |             27 |
++--------------+----------------------+---------------+--------+----------------+
+20 rows in set (0.00 sec)
+
+mysql> table flight_crew_info;
++---------+----------------+------------------+------------+-----------------+----------+
+| Crew_id | Crew_name      | Role             | License_no | Experience_year | Status   |
++---------+----------------+------------------+------------+-----------------+----------+
+|       1 | Ravi Kumar     | Pilot            | LIC12345   |              15 | Active   |
+|       2 | Anita Deshmukh | Co-Pilot         | LIC12346   |              10 | Active   |
+|       3 | Sanjay Mehta   | Flight Attendant | LIC12347   |               7 | Active   |
+|       4 | Priya Sharma   | Flight Attendant | LIC12348   |               5 | Active   |
+|       5 | Ajay Singh     | Pilot            | LIC12349   |              12 | On Leave |
+|       6 | Deepa Reddy    | Flight Engineer  | LIC12350   |               9 | Active   |
+|       7 | Vikram Joshi   | Co-Pilot         | LIC12351   |               8 | Inactive |
+|       8 | Swati Patel    | Flight Attendant | LIC12352   |               6 | Active   |
+|       9 | Manoj Yadav    | Flight Engineer  | LIC12353   |              11 | Active   |
+|      10 | Neha Gupta     | Flight Attendant | LIC12354   |               4 | Active   |
+|      11 | Ramesh Bansal  | Pilot            | LIC12355   |              18 | Active   |
+|      12 | Meena Nair     | Co-Pilot         | LIC12356   |              10 | Active   |
+|      13 | Arun Malhotra  | Flight Engineer  | LIC12357   |              13 | On Leave |
+|      14 | Pooja Verma    | Flight Attendant | LIC12358   |               5 | Active   |
+|      15 | Suresh Chauhan | Pilot            | LIC12359   |              20 | Active   |
+|      16 | Anjali Shah    | Co-Pilot         | LIC12360   |               9 | Active   |
+|      17 | Vivek Tiwari   | Flight Attendant | LIC12361   |               7 | Inactive |
+|      18 | Neelam Desai   | Flight Engineer  | LIC12362   |              12 | Active   |
+|      19 | Rahul Kapoor   | Pilot            | LIC12363   |              14 | Active   |
+|      20 | Simran Kaur    | Flight Attendant | LIC12364   |               6 | Active   |
++---------+----------------+------------------+------------+-----------------+----------+
+20 rows in set (0.00 sec)
+
+mysql> table aircraft_info;
++-------------+-------------------------+-------------------+---------------------+-------------+
+| Aircraft_id | Aircraft_model          | Manufactures      | Year_of_manufacture | Engine_type |
++-------------+-------------------------+-------------------+---------------------+-------------+
+|           1 | Boeing 747              | Boeing            |                1998 | Jet         |
+|           2 | Airbus A320             | Airbus            |                2005 | Jet         |
+|           3 | Cessna 172              | Cessna            |                2010 | Propeller   |
+|           4 | Embraer E195            | Embraer           |                2012 | Jet         |
+|           5 | Boeing 737              | Boeing            |                2008 | Jet         |
+|           6 | Bombardier Dash 8       | Bombardier        |                2003 | Turboprop   |
+|           7 | Airbus A380             | Airbus            |                2015 | Jet         |
+|           8 | Piper PA-28             | Piper             |                2000 | Propeller   |
+|           9 | Concorde                | Aerospatiale      |                1980 | Jet         |
+|          10 | Lockheed C-130          | Lockheed          |                1995 | Turboprop   |
+|          11 | Embraer Phenom 300      | Embraer           |                2016 | Jet         |
+|          12 | Boeing 777              | Boeing            |                2011 | Jet         |
+|          13 | Airbus A350             | Airbus            |                2017 | Jet         |
+|          14 | Cessna Citation X       | Cessna            |                2008 | Jet         |
+|          15 | Tupolev Tu-154          | Tupolev           |                1990 | Jet         |
+|          16 | Antonov An-124          | Antonov           |                2001 | Jet         |
+|          17 | Beechcraft King Air     | Beechcraft        |                2005 | Turboprop   |
+|          18 | Dassault Falcon 7X      | Dassault          |                2012 | Jet         |
+|          19 | Sukhoi Superjet 100     | Sukhoi            |                2013 | Jet         |
+|          20 | McDonnell Douglas DC-10 | McDonnell Douglas |                1985 | Jet         |
++-------------+-------------------------+-------------------+---------------------+-------------+
+20 rows in set (0.00 sec)
+
+mysql> table fare_info;
++---------+-----------+----------------------------+------------+----------+
+| Fare_id | flight_id | Fare_rules                 | Base_price | Discount |
++---------+-----------+----------------------------+------------+----------+
+|       1 |       101 | Non-refundable             |       5000 |       10 |
+|       2 |       101 | Refundable within 24 hours |       5500 |        5 |
+|       3 |       102 | Non-refundable             |       6000 |       15 |
+|       4 |       102 | Business class             |       8000 |        5 |
+|       5 |       103 | First Class                |      10000 |        0 |
+|       6 |       103 | Economy Flexible           |       6500 |        8 |
+|       7 |       104 | Non-refundable             |       4800 |       12 |
+|       8 |       105 | Refundable with fee        |       5300 |        7 |
+|       9 |       106 | Economy Saver              |       4500 |        5 |
+|      10 |       107 | Business Premium           |       9000 |        0 |
+|      11 |       107 | Non-refundable             |       8500 |       10 |
+|      12 |       108 | Refundable within 24h      |       5200 |        6 |
+|      13 |       109 | First Class                |      10500 |        0 |
+|      14 |       110 | Economy Flexible           |       6200 |        8 |
+|      15 |       110 | Non-refundable             |       5900 |       12 |
+|      16 |       111 | Business Saver             |       8500 |        5 |
+|      17 |       112 | Non-refundable             |       4800 |       10 |
+|      18 |       113 | Refundable with fee        |       7000 |        5 |
+|      19 |       114 | Economy Saver              |       5000 |        8 |
+|      20 |       115 | First Class                |      11000 |        0 |
++---------+-----------+----------------------------+------------+----------+
+20 rows in set (0.00 sec)
+
+mysql> table itinerary_management;
++--------------+---------------+-------------+----------+
+| Itinerary_id | Ipassenger_id | ibooking_id | Sequence |
++--------------+---------------+-------------+----------+
+|            1 |             1 |           1 |        1 |
+|            2 |             1 |           1 |        2 |
+|            3 |             1 |           2 |        1 |
+|            4 |             1 |           2 |        2 |
+|            5 |             1 |           3 |        1 |
+|            6 |             1 |           3 |        2 |
+|            7 |             2 |           4 |        1 |
+|            8 |             2 |           4 |        2 |
+|            9 |             2 |           5 |        1 |
+|           10 |             3 |           6 |        1 |
+|           11 |             3 |           6 |        2 |
+|           12 |             3 |          12 |        1 |
+|           13 |             4 |           7 |        1 |
+|           14 |             4 |           7 |        2 |
+|           15 |             5 |           8 |        1 |
+|           16 |             5 |          14 |        1 |
+|           17 |             6 |           9 |        1 |
+|           18 |             6 |          15 |        1 |
+|           19 |             7 |          10 |        1 |
+|           20 |             7 |          16 |        1 |
++--------------+---------------+-------------+----------+
+20 rows in set (0.00 sec)
