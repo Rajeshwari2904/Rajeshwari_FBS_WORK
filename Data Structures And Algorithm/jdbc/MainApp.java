@@ -41,7 +41,9 @@ public class MainApp {
 
 	}
 
-}  // Resultset MetaDATA------>>>>Explore
+}  
+// Resultset MetaDATA------>>>>Explore
 
-// there is a built in component row set jo use karne pe disconnected data milta hai....connected architecture
-// 
+// There is a built in component row set jo use karne pe disconnected data milta hai....connected architecture
+// A RowSet is a powerful and flexible extension of the standard java.sql.ResultSet interface, designed to provide a more adaptable and component-based approach to handling tabular data, particularly in a disconnected environment. It is part of the javax.sql package and was introduced to support component models like JavaBeans
+
